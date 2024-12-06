@@ -15,7 +15,7 @@ class HomeViewModel extends Notifier<HomeState>{
   HomeState build() {
     return HomeState([]);
   }
-  void searchLocation(String query) async {
+  Future<void> searchLocation(String query) async {
     final locationRepository = LocationRepository();
     final locations = await locationRepository.searchLocation(query);
     state = HomeState(locations);
@@ -24,6 +24,6 @@ class HomeViewModel extends Notifier<HomeState>{
 
 
 // 3. 뷰모델 관리자 만들기 - NotifierProvider 객체
-final HomeViewModelProvider = NotifierProvider<HomeViewModel, HomeState>(() {
+final homeViewModelProvider = NotifierProvider<HomeViewModel, HomeState>(() {
   return HomeViewModel();
 },);
