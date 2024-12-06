@@ -5,7 +5,7 @@ class HomeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 100),
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 80),
       child: Expanded(
         child: ListView.separated(
           itemCount: 5,
@@ -40,12 +40,36 @@ class HomeListView extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
-            children: [
-              Text('title'),
-              Text('category'),
-              Text('roadAddress'),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'title',
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  'category',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  'roadAddress',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
