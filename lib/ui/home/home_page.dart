@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_region_search_app/ui/home/widgets/home_list_view.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        body: Text('HomePage'),
+        body: HomeListView(),
       ),
     );
   }
