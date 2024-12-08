@@ -1,32 +1,44 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:flutter_region_search_app/data/model/location.dart';
-import 'package:http/http.dart';
 
 class LocationRepository {
-  Future<List<Location>> searchLocation(String query) async {
-    final client = Client();
-    final response = await client.get(
-      Uri.parse('https://openapi.naver.com/v1/search/local.json?query=$query'),
-      headers: {
-        'X-Naver-Client-Id': 'OqZwVS1YiHDn_0Tgjk0M',
-        'X-Naver-Client-Secret': 'AnmZj3YNr1',
-      },
-    );
-    // Get 요청시 성공 => 200
-    // 응답코드가 200일때!
-    // body 데이터를 jsonDecode 함수 사용해서 map으로 바꾼 후 List<Book> 로 반환
-    if(response.statusCode == 200){
-      Map<String, dynamic> map = jsonDecode(response.body);
-      final items = List.from(map['items']);
-      final iterable = items.map((e) {
-        return Location.fromJson(e);
-      }).toList();
-      
-      return iterable;
-    }
+  final Dio _client = Dio(BaseOptions(
+    validateStatus: (status) => true, // 설정안하면 실패함
+  ));
 
-    // 아닐땐 빈 리스트 반환
-    return [];
+// https://api.vworld.kr/req/search
+// request=search
+// key=13F2292F-8ECD-3502-827E-073057EAD096
+// query=삼성동
+// type=DISTRICT
+// category=L4
+
+  Future<List<String>> findByName(String query) async {
+    try {
+      final response = await _client.get(
+        'https://api.vworld.kr/req/search',
+        queryParameters: {
+          'request': 'search',
+          'key': '13F2292F-8ECD-3502-827E-073057EAD096',
+          'query': query,
+          'type': 'DISTRICT',
+          'category': 'L4',
+        },
+      );
+      if (response.statusCode == 200 &&
+          response.data['response']['status'] == 'OK') {
+        // response > result > items >> title
+        final items = response.data['response']['result']['items'];
+        final itemList = List.from(items);
+        final iterable = itemList.map((item) {
+          // return '${item['title']}';
+          return itemList.map((item) => Location.fromJson(item)).toList();
+        });
+      }
+      return [];
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 }

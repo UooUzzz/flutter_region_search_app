@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   // 검색 함수(엔터시 바로 검색)
-  void onSearch(String text){
+  void onSearch(String text) {
     print('onSearch 호출됨');
   }
 

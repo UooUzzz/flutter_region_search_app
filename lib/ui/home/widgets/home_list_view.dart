@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_region_search_app/ui/detail/detail_page.dart';
+import 'package:flutter_region_search_app/ui/home/search_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 80),
-      child: Expanded(
-        child: ListView.separated(
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return location();
-          },
-          separatorBuilder: (context, index) => SizedBox(height: 20),
-        ),
+      child: Consumer(
+        builder: (context, ref, child) {
+          final locations = ref.watch(searchViewModel);
+          return Expanded(
+            child: ListView.separated(
+              itemCount: locations.length,
+              itemBuilder: (context, index) {
+                final item = locations[index];
+                return region();
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 20),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget location() {
+  Widget region() {
     return Builder(builder: (context) {
       return GestureDetector(
         onTap: () {
