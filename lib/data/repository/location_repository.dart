@@ -6,13 +6,6 @@ class LocationRepository {
     validateStatus: (status) => true, // 설정안하면 실패함
   ));
 
-// https://api.vworld.kr/req/search
-// request=search
-// key=13F2292F-8ECD-3502-827E-073057EAD096
-// query=삼성동
-// type=DISTRICT
-// category=L4
-
   Future<List<Location>> findByName(String query) async {
     try {
       final response = await _client.get(
