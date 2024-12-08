@@ -29,12 +29,25 @@ class HomeListView extends StatelessWidget {
     return Builder(builder: (context) {
       return GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return DetailPage();
-            }),
-          );
+          if (item.link.startsWith('https')) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return DetailPage(item);
+              }),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  '잘못된 접근입니다.',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            );
+          }
         },
         child: Container(
           height: 110,
