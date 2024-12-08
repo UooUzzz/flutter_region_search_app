@@ -13,27 +13,25 @@ class LocationRepository {
 // type=DISTRICT
 // category=L4
 
-  Future<List<String>> findByName(String query) async {
+  Future<List<Location>> findByName(String query) async {
     try {
       final response = await _client.get(
-        'https://api.vworld.kr/req/search',
+        'https://openapi.naver.com/v1/search/local.json',
         queryParameters: {
-          'request': 'search',
-          'key': '13F2292F-8ECD-3502-827E-073057EAD096',
           'query': query,
-          'type': 'DISTRICT',
-          'category': 'L4',
+          'display': 5,
         },
+        options: Options(
+          headers: {
+            'X-Naver-Client-Id': 'OqZwVS1YiHDn_0Tgjk0M',
+            'X-Naver-Client-Secret': 'AnmZj3YNr1',
+          },
+        ),
       );
-      if (response.statusCode == 200 &&
-          response.data['response']['status'] == 'OK') {
+      if (response.statusCode == 200) {
         // response > result > items >> title
-        final items = response.data['response']['result']['items'];
-        final itemList = List.from(items);
-        final iterable = itemList.map((item) {
-          // return '${item['title']}';
-          return itemList.map((item) => Location.fromJson(item)).toList();
-        });
+        final items = response.data['items'];
+        return (items as List).map((item) => Location.fromJson(item)).toList();
       }
       return [];
     } catch (e) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_region_search_app/data/model/location.dart';
 import 'package:flutter_region_search_app/ui/detail/detail_page.dart';
 import 'package:flutter_region_search_app/ui/home/search_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,23 +11,21 @@ class HomeListView extends StatelessWidget {
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 80),
       child: Consumer(
         builder: (context, ref, child) {
-          final locations = ref.watch(searchViewModel);
-          return Expanded(
-            child: ListView.separated(
-              itemCount: locations.length,
-              itemBuilder: (context, index) {
-                final item = locations[index];
-                return region();
-              },
-              separatorBuilder: (context, index) => SizedBox(height: 20),
-            ),
+          final locations = ref.watch(searchViewModelProvider);
+          return ListView.separated(
+            itemCount: locations.length,
+            itemBuilder: (context, index) {
+              final item = locations[index];
+              return region(item);
+            },
+            separatorBuilder: (context, index) => SizedBox(height: 20),
           );
         },
       ),
     );
   }
 
-  Widget region() {
+  Widget region(Location item) {
     return Builder(builder: (context) {
       return GestureDetector(
         onTap: () {
@@ -55,7 +54,7 @@ class HomeListView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'title',
+                  item.title,
                   style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.bold,
@@ -63,14 +62,14 @@ class HomeListView extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'category',
+                  item.category,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black,
                   ),
                 ),
                 Text(
-                  'roadAddress',
+                  item.roadAddress,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black,

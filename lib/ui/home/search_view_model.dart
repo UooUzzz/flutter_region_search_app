@@ -6,9 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // List<String>
 
 // 2. 뷰모델 만들기 - Notifier 상속
-class SearchViewModel extends AutoDisposeNotifier<List<String>> {
+class SearchViewModel extends AutoDisposeNotifier<List<Location>> {
   @override
-  List<String> build() {
+  List<Location> build() {
     return [];
   }
 
@@ -21,7 +21,7 @@ class SearchViewModel extends AutoDisposeNotifier<List<String>> {
 }
 
 // 3. 뷰모델 관리자 만들기 - NotifierProvider 객체
-final searchViewModel =
-    NotifierProvider.autoDispose<SearchViewModel, List<String>>(() {
+final searchViewModelProvider =
+    NotifierProvider.autoDispose<SearchViewModel, List<Location>>(() {
   return SearchViewModel();
 });

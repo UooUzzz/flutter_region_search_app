@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_region_search_app/ui/home/search_view_model.dart';
 import 'package:flutter_region_search_app/ui/home/widgets/home_list_view.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   TextEditingController textEditingController = TextEditingController();
   @override
   void dispose() {
@@ -16,6 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   // 검색 함수(엔터시 바로 검색)
   void onSearch(String text) {
+    ref.read(searchViewModelProvider.notifier).searchByName(text);
     print('onSearch 호출됨');
   }
 
