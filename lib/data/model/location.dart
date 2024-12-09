@@ -20,6 +20,7 @@ class Location {
   String roadAddress;
   String mapx;
   String mapy;
+  String name; 
 
   Location({
     required this.title,
@@ -31,6 +32,7 @@ class Location {
     required this.roadAddress,
     required this.mapx,
     required this.mapy,
+    required this.name,
   });
 
   // 1. fromJson 네임드 생성자 만들기
@@ -44,6 +46,7 @@ class Location {
     roadAddress: map['roadAddress'],
     mapx: map['mapx'],
     mapy: map['mapy'],
+    name: map['properties']?['full_nm'] ?? '',
   );
 
   // 2. toJson 메서드 만들기
@@ -58,6 +61,7 @@ class Location {
       'roadAddress': roadAddress,
       'mapx': mapx,
       'mapy': mapy,
+      'name': name,
     };
   }
 

@@ -16,6 +16,12 @@ class SearchViewModel extends AutoDisposeNotifier<List<Location>> {
 
   Future<void> searchByName(String query) async {
     final result = await locationRepository.findByName(query);
+    print(result);
+    state = result;
+  }
+  Future<void> searchByCurrent(double lat, double lng) async {
+    final result = await locationRepository.findByCurrent(lat, lng);
+    print(result);
     state = result;
   }
 }
