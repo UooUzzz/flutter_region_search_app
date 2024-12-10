@@ -7,33 +7,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class HomeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 80),
-      child: Consumer(
-        builder: (context, ref, child) {
-          final locations = ref.watch(searchViewModelProvider);
-          return ListView.separated(
-            itemCount: locations.length,
-            itemBuilder: (context, index) {
-              final item = locations[index];
-              return region(item);
-            },
-            separatorBuilder: (context, index) => SizedBox(height: 20),
-          );
+    return Consumer(builder: (context, ref, child) {
+      final viewModel = ref.read(searchViewModelProvider.notifier);
+      final state = ref.watch(searchViewModelProvider);
+      return ListView.separated(
+        padding: EdgeInsets.all(20),
+        itemCount: state.locations.length,
+        itemBuilder: (context, index) {
+          final location = state.locations[index];
+          return region(location);
         },
-      ),
-    );
+        separatorBuilder: (context, index) => SizedBox(height: 20),
+      );
+    });
   }
 
-  Widget region(Location item) {
+  Widget region(Location location) {
     return Builder(builder: (context) {
       return GestureDetector(
         onTap: () {
-          if (item.link.startsWith('https')) {
+          if (location.link.startsWith('https')) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) {
-                return DetailPage(item);
+                return DetailPage(
+                  title: location.title,
+                  link: location.link,
+                );
               }),
             );
           } else {
@@ -67,7 +67,7 @@ class HomeListView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.title,
+                  location.title,
                   style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.bold,
@@ -75,14 +75,14 @@ class HomeListView extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  item.category,
+                  location.category,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black,
                   ),
                 ),
                 Text(
-                  item.roadAddress,
+                  location.roadAddress,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black,

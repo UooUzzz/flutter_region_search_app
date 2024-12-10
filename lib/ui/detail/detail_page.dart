@@ -3,15 +3,19 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_region_search_app/data/model/location.dart';
 
 class DetailPage extends StatelessWidget {
-  DetailPage(this.item);
+  DetailPage({
+    required this.title,
+    required this.link,
+  });
 
-  Location item;
+  final String title;
+  final String link;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(item.title),
+        title: Text(title),
       ),
       body: InAppWebView(
         initialSettings: InAppWebViewSettings(
@@ -21,7 +25,7 @@ class DetailPage extends StatelessWidget {
               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
         ),
         initialUrlRequest: URLRequest(
-          url: WebUri(item.link),
+          url: WebUri(link),
         ),
       ),
     );
